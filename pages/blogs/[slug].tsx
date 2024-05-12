@@ -1,9 +1,8 @@
-import {GetServerSideProps, GetServerSidePropsContext} from "next";
-import { useRouter } from "next/router";
 import dbConnect from "@/lib/dbConnect";
 import Blog from "@/model/Blog";
 import { serialize } from 'next-mdx-remote/serialize'
 import { MDXRemote } from 'next-mdx-remote'
+
 
 const blogPage = ({ blog, mdx }) => {
     return (
@@ -11,7 +10,7 @@ const blogPage = ({ blog, mdx }) => {
             <div>
                 {blog.title}
             </div>
-            <div>
+            <div className="prose">
                 <MDXRemote {...mdx} />
             </div>
             <div>
