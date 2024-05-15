@@ -4,7 +4,7 @@ import dbConnect from "@/lib/dbConnect";
 import Blog from "@/model/Blog";
 import {serialize} from "next-mdx-remote/serialize";
 import BlogCard from "@/components/BlogCard";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import SearchBar from "@/components/SearchBar";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -12,21 +12,27 @@ const inter = Inter({ subsets: ["latin"] });
 export default function Index({ blogs }) {
     const [searchTerm, setSearchTerm] = useState("");
     const [blogsArray, setBlogsArray] = useState(blogs);
+    const [filters, setFilters] = useState([]);
+
     const handleSearch = async () => {
         try {
+            console.log(searchTerm);
             const response = await fetch(`/api/search?q=${searchTerm}`);
+
             const data = await response.json();
+            console.log("hello", data);
             setBlogsArray(data);
         } catch (error) {
             console.error("Error fetching search results:", error);
         }
     }
-
+    useEffect(() => {
+        handleSearch();
+    }, [searchTerm]);
     return (
         <>
             <SearchBar searchTerm={searchTerm} onChange={(e) => {
                 setSearchTerm(e.target.value);
-                handleSearch();
             } }/>
             <div className={"flex flex-wrap justify-center"}>
                 {
