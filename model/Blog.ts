@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 const { Schema } = mongoose;
 
-const blogSchema = new Schema({
+var blogSchema = new Schema({
     slug: String,
     title: String,
     author: String,
@@ -10,6 +10,7 @@ const blogSchema = new Schema({
     likes: Number,
     views: Number
 }, { collection: 'blogposts' });
+
 
 const Blog = mongoose.models.Blog || mongoose.model('Blog', blogSchema);
 export default Blog;

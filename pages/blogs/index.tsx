@@ -3,22 +3,36 @@ import Link from 'next/link'
 import dbConnect from "@/lib/dbConnect";
 import Blog from "@/model/Blog";
 import {serialize} from "next-mdx-remote/serialize";
+import BlogCard from "@/components/BlogCard";
+import {useState} from "react";
+import SearchBar from "@/components/SearchBar";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Index({ blogs }) {
-    console.log(blogs)
+    const [searchTerm, setSearchTerm] = useState("");
+    const [blogsArray, setBlogsArray] = useState(blogs);
+    const handleSearch = async () => {
+        try {
+            const response = await fetch(`/api/search?q=${searchTerm}`);
+            const data = await response.json();
+            setBlogsArray(data);
+        } catch (error) {
+            console.error("Error fetching search results:", error);
+        }
+    }
+
     return (
         <>
-            <div>
+            <SearchBar searchTerm={searchTerm} onChange={(e) => {
+                setSearchTerm(e.target.value);
+                handleSearch();
+            } }/>
+            <div className={"flex flex-wrap justify-center"}>
                 {
-                    blogs.map( (blog) => {
+                    blogsArray.map( (blog) => {
                         return (
-                            <div>
-                                <Link href={ {pathname: "/blogs/[slug]", query: { slug: blog.slug } } }>
-                                    <button>Press to see blog with slug {blog.slug}</button>
-                                </Link>
-                            </div>
+                            <BlogCard path={"blogs/[slug]"} blog={blog}/>
                         )
                     })
                 }

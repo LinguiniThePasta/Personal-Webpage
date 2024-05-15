@@ -2,10 +2,11 @@ import Link from 'next/link'
 const Navbar = () => {
     return (
         <>
-            <nav>
-                <ul>
+            <nav className={"flex py-3 bg-amber-400 font-bold"}>
+                <Link className={"ml-6"} href={"/"}>LOGO</Link>
+                <ul className={"inline-flex flex-grow justify-evenly mx-10"}>
                     <li>
-                        <Link href={"/"}>LOGO</Link>
+                        <Link href={"/about"}>About Me</Link>
                     </li>
                     <li>
                         <Link href={"/blogs"}>Blogs</Link>
@@ -14,7 +15,7 @@ const Navbar = () => {
                         <Link href={"/blogs"}>Project</Link>
                     </li>
                     <li>
-                        <Link href={"/about"}>About Me</Link>
+                        <Link href={"/contact"}>Contact</Link>
                     </li>
                 </ul>
             </nav>

@@ -8,7 +8,11 @@ const config: Config = {
   ],
   theme: {
     extend: {
-
+      spacing: {
+        '130': '520px',
+        '140': '560px',
+        '160': '640px'
+      }
     },
   },
   plugins: [require("@tailwindcss/typography")],
